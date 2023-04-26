@@ -1,0 +1,47 @@
+version: '3'
+services:
+  nginx:
+    container_name: nginx
+    build:
+      context: nginx
+      target: base
+    ports:
+      - 443:443
+      - 80:80
+    networks:
+      nw-apps:
+        aliases: 
+          - gateway.state.local
+    links:
+      - app1
+      - app2
+  app1:
+    container_name: app1
+    build:
+      context: app1
+      target: dev
+    ports:
+      - 5001:3000
+    volumes:
+      - ./app1/src:/app/src
+    networks:
+      nw-apps:
+        aliases:
+          - app1.state.local
+  app2:
+    container_name: app2
+    build:
+      context: app2
+      target: dev
+    ports:
+      - 5002:3000
+    volumes:
+      - ./app2/src:/app/src
+    networks:
+      nw-apps:
+        aliases:
+          - app2.state.local
+
+networks:
+  nw-apps:
+    driver: bridge
