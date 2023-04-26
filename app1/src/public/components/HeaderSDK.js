@@ -20,11 +20,14 @@ export const HeaderSDK = ()=>{
     })()
   }, []);
 
+  // use ssi to include html from /app2/header on server
   const content = typeof window === 'undefined' && '<!--# include virtual="/app2/header" -->';
 
   const markup = content ? (
     <div dangerouslySetInnerHTML={{ __html: content }} />
   ) : (
+    // intentionally allow first render on client to be different from server rendered html
+    // second render after useEffect() will sync server render and client render
     <div
       ref={headerRef}
       suppressHydrationWarning={true}
