@@ -24,6 +24,8 @@ services:
       - 5001:3000
     volumes:
       - ./app1/src:/app/src
+      - ./app1/package.json:/app/package.json
+      - ./app1/package-lock.json:/app/package-lock.json
     networks:
       nw-apps:
         aliases:
@@ -37,6 +39,8 @@ services:
       - 5002:3000
     volumes:
       - ./app2/src:/app/src
+      - ./app2/package.json:/app/package.json
+      - ./app2/package-lock.json:/app/package-lock.json
     networks:
       nw-apps:
         aliases:
