@@ -17,7 +17,8 @@ note `<script src="/app1/static/clientSideRouting.js"></script>` in `app1/src/se
 
 `app1/src/public/components/HeaderSDK.js` normally would live in `app2` and gets published to npm. The complexity is not necessary for such a sandbox environment. Having it directly in the consumer `app1` simplifies things.  
 
-
+# How to run
+`docker compose up`
 
 
 
