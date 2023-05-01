@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useHeaderState } from '../hooks/useHeaderState'
-import { subscribe } from 'valtio';
-import { headerState } from '../state/headerState';
+
+console.log('Header')
 
 const Section = ({sectionName, color = 'red'}) => {
     const [count, setCount] = useHeaderState();
@@ -14,26 +14,6 @@ const Section = ({sectionName, color = 'red'}) => {
     )
 }
 
-const SectionSubscribe = ({ color = 'red'}) => {
-    const [localCount, setLocalCount] = useState(0);
-    useEffect(()=>{
-        const unsubscribe = subscribe(headerState, () => {
-            setLocalCount(headerState.count)
-        })
-
-        return ()=>{
-            unsubscribe();
-        }
-    }, [])
-    return (
-        <div style={{border: `1px solid ${color}`}}>
-            <h1>Section using vanilla subscribe</h1>
-            <p>Header count: {localCount}</p>
-            <button onClick={() => ++headerState.count}>increase</button>
-        </div>
-    )
-}
-
 export const Header = () => {
     return (
         <div style={{border: '1px solid red'}}>
@@ -41,7 +21,6 @@ export const Header = () => {
             <div style={{display: 'flex', justifyContent: 'space-around'}}>
                 <Section sectionName="Section One" color="green"/>
                 <Section sectionName="Section Two" color="blue"/>
-                <SectionSubscribe color="cyan" />
             </div>
         </div>
     )

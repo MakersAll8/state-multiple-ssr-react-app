@@ -1,11 +1,22 @@
-import { useProxy } from 'valtio/utils'
-import { headerState } from '../state/headerState';
+import { useEffect, useState } from 'react';
 
 export const useHeaderState = ()=>{
-    const $headerState = useProxy(headerState)
+    const [count, setCount] = useState(0);
 
-    function setCount(newCount){
-        $headerState.count = newCount;
+    useEffect(()=>{
+        const {subscribe, snapshot} = window.__header__;
+        const unsubscribe = subscribe(window.__header__.headerState, ()=>{
+            const snap = snapshot(window.__header__.headerState);
+            setCount(snap.count)
+        })
+
+        return ()=>{
+            unsubscribe()
+        }
+    }, [])
+
+    function setHeaderCount(newCount){
+        window.__header__.headerState.count = newCount;
     }
-    return [$headerState.count, setCount]
+    return [count, setHeaderCount]
 }
