@@ -16,4 +16,6 @@ hydrateRoot(
 )
 
 window.__header__ = window.__header__ || {};
-window.__header__.store = store
+window.__header__.store ? null: window.__header__.store = store
+
+console.log('header.js ran')
