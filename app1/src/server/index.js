@@ -5,6 +5,8 @@ import { renderToString } from 'react-dom/server';
 import { Home } from '../public/components/Home';
 import { StaticRouter as Router } from "react-router-dom/server";
 import { ClientSideRouting } from '../public/components/ClientSideRouting';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
 const app = express()
 
@@ -33,9 +35,9 @@ apiRouter.get('/client-side-routing*', (req, res) => {
 })
 
 apiRouter.get('/', (req, res) => {
-  const { name = "World" } = req.query;
 
-  const component = renderToString(<Home name={name}/>)
+  const serverDefaultStore = createStore((state = {count: 0}) => state);
+  const component = renderToString(<Provider store={serverDefaultStore}><Home/></Provider>)
 
   const html = `
   <!doctype html>
@@ -46,7 +48,6 @@ apiRouter.get('/', (req, res) => {
       <style>
         body { font-family: Arial, sans-serif; font-size: 15px; }
       </style>
-      <script>window.__INITIAL__DATA__ = ${JSON.stringify({ name })}</script>
     </head>
     <body>
     <div id="root">${component}</div>
