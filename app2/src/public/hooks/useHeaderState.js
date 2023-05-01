@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 export const useHeaderState = ()=>{
+    console.log('useHeaderState invoked')
     const [count, setCount] = useState(0);
 
     useEffect(()=>{
